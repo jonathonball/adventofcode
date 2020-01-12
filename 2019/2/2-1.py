@@ -5,23 +5,19 @@ import sys
 class IntCodePc:
 
     def __init__(self):
-        self.index = 0
-        self.opcode = 0
-        self.input_a = 0
-        self.input_b = 0
-        self.output = 0
         self.read_input()
+        self.instruction_pointer = 0
 
     def run(self):
-        while self.index < self.size:
+        while self.instruction_pointer < self.size:
             self.fetch()
             if self.opcode == 99:
                 print(self.read(0))
                 sys.exit()
             elif self.opcode == 1:
-                self.write(self.output, (self.input_a + self.input_b))
+                self.write(self.output, (self.param_a + self.param_b))
             elif self.opcode == 2:
-                self.write(self.output, (self.input_a * self.input_b))
+                self.write(self.output, (self.param_a * self.param_b))
             else:
                 print("bad :(")
                 sys.exit(255)
@@ -34,21 +30,21 @@ class IntCodePc:
         ]
         self.size = len(self.mem)
 
-    def read(self, index):
-        return int(self.mem[index])
+    def read(self, instruction_pointer):
+        return int(self.mem[instruction_pointer])
 
-    def deref(self, index):
-        return self.mem[self.read(index)]
+    def deref(self, instruction_pointer):
+        return self.mem[self.read(instruction_pointer)]
 
-    def write(self, index, value):
-        self.mem[index] = value
+    def write(self, instruction_pointer, value):
+        self.mem[instruction_pointer] = value
 
     def fetch(self):
-        self.opcode = self.read(self.index)
-        self.input_a = self.deref(self.index + 1)
-        self.input_b = self.deref(self.index + 2)
-        self.output = self.read(self.index + 3)
-        self.index += 4
+        self.opcode = self.read(self.instruction_pointer)
+        self.param_a = self.deref(self.instruction_pointer + 1)
+        self.param_b = self.deref(self.instruction_pointer + 2)
+        self.output = self.read(self.instruction_pointer + 3)
+        self.instruction_pointer += 4
 
 pc = IntCodePc()
 print(pc.run())
