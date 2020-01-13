@@ -30,7 +30,7 @@ class IntCodePc:
                 for num in line.strip().split(',')
         ]
         self.size = len(self.mem)
-        self.state = [address for address in self.mem]
+        self.save_state()
 
     def read(self, address):
         return int(self.mem[address])
@@ -50,10 +50,15 @@ class IntCodePc:
 
     def reset(self):
         self.instruction_pointer = 0
+        self.restore_state()
+
+    def save_state(self):
+        self.state = [address for address in self.mem]
+
+    def restore_state(self):
         self.mem = [address for address in self.state]
 
 pc = IntCodePc()
-
 for noun in range(0,100):
     for verb in range(0,100):
         pc.noun = noun
