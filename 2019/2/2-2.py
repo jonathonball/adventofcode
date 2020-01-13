@@ -32,14 +32,14 @@ class IntCodePc:
         self.size = len(self.mem)
         self.state = [address for address in self.mem]
 
-    def read(self, instruction_pointer):
-        return int(self.mem[instruction_pointer])
+    def read(self, address):
+        return int(self.mem[address])
 
-    def deref(self, instruction_pointer):
-        return self.mem[self.read(instruction_pointer)]
+    def deref(self, address):
+        return self.mem[self.read(address)]
 
-    def write(self, instruction_pointer, value):
-        self.mem[instruction_pointer] = value
+    def write(self, address, value):
+        self.mem[address] = value
 
     def fetch(self):
         self.opcode = self.read(self.instruction_pointer)
