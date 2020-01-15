@@ -52,7 +52,6 @@ class Panel:
 
     def add_wire(self, wire, data):
         self.reset()
-        
         for vector in data:
             direction = vector[0]
             magnitude = int(vector[1:])
@@ -67,18 +66,26 @@ class Panel:
                     self.x += 1
                 self.set(self.x, self.y, wire)
 
+    def gather_intersections(self):
+        self.intersections = [
+            self.data[key]
+            for key in self.data.keys() if self.data[key].wire == "Intersection"
+        ]
+
+    def find_shortest(self):
+        shortest = self.intersections[0].distance
+        for intersection in self.intersections:
+            if intersection.distance < shortest:
+                shortest = intersection.distance
+        return shortest
+
+
 panel = Panel()
+
 wires = [ line.strip().split(',') for line in sys.stdin ]
 for wire, data in enumerate(wires):
     panel.add_wire(wire, data)
 
-intersections = [
-    panel.data[key]
-    for key in panel.data.keys() if panel.data[key].wire == "Intersection"
-]
+panel.gather_intersections()
+print(panel.find_shortest())
 
-shortest = intersections[0].distance
-for intersection in intersections:
-    if intersection.distance < shortest:
-        shortest = intersection.distance
-print(shortest)
