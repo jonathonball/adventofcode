@@ -13,8 +13,8 @@ class Point:
         self.x = x
         self.y = y
 
-    def distance(self):
-        self.distance = math.fabs(self.x) + math.fabs(self.y)
+    def distance_from_center(self):
+        self.distance_from_center = math.fabs(self.x) + math.fabs(self.y)
 
 
 class Panel:
@@ -25,9 +25,11 @@ class Panel:
         self.total = 0
 
     def location(self, x, y):
+        """Return string with index for self.data"""
         return str(x) + ":" + str(y)
 
     def get(self, x, y):
+        """Return a Point object or None"""
         location = self.location(x, y)
         try:
             return self.data[location]
@@ -35,6 +37,7 @@ class Panel:
             return None
 
     def set(self, x, y, wire):
+        """Create a new wire segment or update an existing one"""
         location = self.location(x, y) 
         existing = self.get(x, y)
         if not existing:
@@ -43,14 +46,16 @@ class Panel:
             return point
         if existing.wire != wire:
             existing.wire = "Intersection"
-            existing.distance()
+            existing.distance_from_center()
         return existing
 
     def reset(self):
+        """Reset for new wire"""
         self.x = 0
         self.y = 0
 
     def add_wire(self, wire, data):
+        """Parse vector data for new wire"""
         self.reset()
         for vector in data:
             direction = vector[0]
@@ -67,16 +72,18 @@ class Panel:
                 self.set(self.x, self.y, wire)
 
     def gather_intersections(self):
+        """Gather identified intersections into a list"""
         self.intersections = [
             self.data[key]
             for key in self.data.keys() if self.data[key].wire == "Intersection"
         ]
 
-    def find_shortest(self):
-        shortest = self.intersections[0].distance
+    def find_shortest_manhatten(self):
+        """Find the intersection with the shortest distance from 0,0"""
+        shortest = self.intersections[0].distance_from_center
         for intersection in self.intersections:
-            if intersection.distance < shortest:
-                shortest = intersection.distance
+            if intersection.distance_from_center < shortest:
+                shortest = intersection.distance_from_center
         return shortest
 
 
@@ -87,5 +94,5 @@ for wire, data in enumerate(wires):
     panel.add_wire(wire, data)
 
 panel.gather_intersections()
-print(panel.find_shortest())
+print(panel.find_shortest_manhatten())
 
