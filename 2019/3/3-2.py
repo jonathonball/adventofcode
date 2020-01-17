@@ -19,6 +19,9 @@ class Point:
     def set_length(self, wire, length):
         self.length[wire] = length
 
+    def set_combined_length(self):
+        self.combo = self.length[0] + self.length[1]
+
     def __str__(self):
         return json.dumps({
             "location": self.location,
@@ -58,7 +61,7 @@ class Panel:
             existing.wire = "Intersection"
             existing.distance_from_center()
             existing.set_length(wire, length)
-            existing.combo = existing.length[0] + existing.length[1]
+            existing.set_combined_length()
 
     def reset(self):
         """Reset for new wire"""
