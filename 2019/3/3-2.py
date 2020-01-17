@@ -19,6 +19,13 @@ class Point:
     def set_length(self, wire, length):
         self.length[wire] = length
 
+    def __str__(self):
+        return json.dumps({
+            "location": self.location,
+            "x": self.x,
+            "y": self.y,
+            "length": self.length
+        })
 
 class Panel:
 
