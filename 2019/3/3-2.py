@@ -24,6 +24,7 @@ class Point:
             "location": self.location,
             "x": self.x,
             "y": self.y,
+            "wire": self.wire,
             "length": self.length
         })
 
