@@ -6,8 +6,7 @@ import json
 
 class Point:
 
-    def __init__(self, panel, location, wire, x, y):
-        self.panel = panel
+    def __init__(self, location, wire, x, y):
         self.location = location
         self.wire = wire
         self.x = x
@@ -25,8 +24,7 @@ class Panel:
 
     def __init__(self):
         self.data = {}
-        self.intersections = {}
-        self.total = 0
+        self.intersections = []
 
     def location(self, x, y):
         """Return string with index for self.data"""
@@ -42,19 +40,17 @@ class Panel:
 
     def set(self, x, y, wire, length):
         """Create a new wire segment or update an existing one"""
-        location = self.location(x, y) 
         existing = self.get(x, y)
         if not existing:
-            point = Point(self, location, wire, x, y)
+            location = self.location(x, y) 
+            point = Point(location, wire, x, y)
             point.set_length(wire, length)
             self.data[location] = point
-            return point
-        if existing.wire != wire:
+        elif existing.wire != wire:
             existing.wire = "Intersection"
             existing.distance_from_center()
             existing.set_length(wire, length)
             existing.combo = existing.length[0] + existing.length[1]
-        return existing
 
     def reset(self):
         """Reset for new wire"""
