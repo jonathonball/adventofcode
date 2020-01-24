@@ -5,10 +5,14 @@ class Pc:
     def __init__(self):
         self.read_input()
         self.instruction_pointer = 0
+        self.noun = None
+        self.verb = None
 
     def run(self):
-        self.write(1, self.noun)
-        self.write(2, self.verb)
+        if self.noun != None:
+            self.write(1, self.noun)
+        if self.verb != None:
+            self.write(2, self.verb)
         while self.instruction_pointer < self.size:
             self.fetch()
             if self.opcode == 99:
@@ -55,16 +59,3 @@ class Pc:
 
     def restore_state(self):
         self.mem = [address for address in self.state]
-
-# pc = IntCodePc()
-# for noun in range(0,100):
-#     for verb in range(0,100):
-#         pc.noun = noun
-#         pc.verb = verb
-#         result = pc.run()
-#         if (result == 19690720):
-#             print("winner!")
-#             print(result)
-#             print(pc.noun)
-#             print(pc.verb)
-#         pc.reset()
