@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from IntCodePc import IntCodePc
+from IntCodePc import Pc
 
-pc = IntCodePc.Pc()
+pc = Pc.Pc()
 print(pc.run())

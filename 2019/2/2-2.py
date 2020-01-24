@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from IntCodePc import IntCodePc
+from IntCodePc import Pc
 
-pc = IntCodePc.Pc()
+pc = Pc.Pc()
 for noun in range(0,100):
     for verb in range(0,100):
         pc.noun = noun
