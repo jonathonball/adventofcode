@@ -1,4 +1,5 @@
 import sys
+import json
 
 class Pc:
 
@@ -7,6 +8,7 @@ class Pc:
         self.instruction_pointer = 0
         self.noun = None
         self.verb = None
+        self.result = None
 
     def run(self):
         if self.noun != None:
@@ -16,7 +18,8 @@ class Pc:
         while self.instruction_pointer < self.size:
             self.fetch()
             if self.opcode == 99:
-                return self.read(0)
+                self.result = self.read(0)
+                return self.result
             elif self.opcode == 1:
                 self.write(self.output, (self.param_a + self.param_b))
             elif self.opcode == 2:
@@ -52,6 +55,7 @@ class Pc:
 
     def reset(self):
         self.instruction_pointer = 0
+        self.result = None
         self.restore_state()
 
     def save_state(self):
@@ -59,3 +63,10 @@ class Pc:
 
     def restore_state(self):
         self.mem = [address for address in self.state]
+
+    def __str__(self):
+        return json.dumps({
+            "noun": self.noun,
+            "verb": self.verb,
+            "result": self.result
+        })
