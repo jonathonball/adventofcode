@@ -2,5 +2,5 @@
 
 from IntCodePc import Pc
 
-pc = Pc.Pc()
+pc = Pc()
 print(pc.run())

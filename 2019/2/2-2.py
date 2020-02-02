@@ -2,7 +2,7 @@
 
 from IntCodePc import Pc
 
-pc = Pc.Pc()
+pc = Pc()
 for noun in range(0,100):
     for verb in range(0,100):
         pc.noun = noun
