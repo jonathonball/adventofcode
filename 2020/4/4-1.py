@@ -42,19 +42,15 @@ class Passport:
         }
         self.required_keys = set(self.fields.keys())
 
-    def field_is_required(self, key):
-        return key in self.required_keys
-
     def add_field(self, key, value):
         field = Field(key, value)
-        if field.is_valid() and self.field_is_required(key):
+        if field.is_valid():
             self.fields[key] = value
 
     def is_valid(self):
         for key in self.required_keys:
             if self.fields[key] == None:
                 return False
-        print("Valid!")
         return True
 
 # Code execution starts here
@@ -71,3 +67,4 @@ for line in sys.stdin:
             key, value = new_field.split(":")
             passport.add_field(key, value)
  
+print(len(passports))
