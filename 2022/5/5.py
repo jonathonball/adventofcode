@@ -30,12 +30,8 @@ while doReadDrawing:
   else:
     rawDrawings.append(rawInput)
 
-
-#numColumns = len(columns.split())
-#numRows = len(rawDrawings)
 columns = []
 columnMap = rawDrawings.pop()
-
 for index, value in enumerate(columnMap):
   if value.isnumeric():
     column = deque()
@@ -44,8 +40,15 @@ for index, value in enumerate(columnMap):
         column.appendleft(row[index])
     columns.append(list(column))
 
-print(columns)
-
 instructions = []
 for rawInput in file.readlines():
-  pass
+  amount, source, dest = [ int(n) for n in rawInput.split() if n.isnumeric() ]
+  source -= 1
+  dest -= 1
+  crates = columns[source][-amount:]
+  columns[source] = columns[source][:-amount]
+  while len(crates):
+    columns[dest].append(crates.pop())
+
+for column in columns:
+  print(column.pop(), end='')
