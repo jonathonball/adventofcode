@@ -5,6 +5,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filename', default='.\\input.txt')
     parser.add_argument('-d', '--delimiter', default='\n')
+    parser.add_argument('--debug', action='store_true')
     return parser.parse_args()
 
 def get_raw_data(args):
