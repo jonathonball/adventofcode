@@ -18,12 +18,9 @@ def three(args, data):
     return 0
 
 def clean_matches(matches):
-    clean = []
-    for match in matches:
-        match = [s for s in match if s != '']
-        clean.append(match)
-    return clean
-   
+    """Convert tuple to list and remove empty values"""
+    return [[s for s in match if s != ''] for match in matches]
+
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filename', default='.\\input.txt')
