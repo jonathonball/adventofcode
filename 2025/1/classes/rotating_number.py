@@ -4,6 +4,7 @@ class RotatingNumber:
         self.minimum = 0
         self.maximum = 99
         self.zero_count = 0
+        self.zero_pass = 0
 
     def rotate(self, direction, amount):
         if direction == 'L':
