@@ -2,6 +2,7 @@ import sys
 
 class InputReader:
     def __init__(self, source=None):
+        self.source = source
         if not source:
             self.source = sys.stdin
 
