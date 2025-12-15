@@ -1,5 +1,13 @@
 import sys
 
+class Debugable:
+    def __init__(self):
+        self.debug_mode = False
+
+    def debug(self, message):
+        if self.debug_mode:
+            print(f"{message}")
+
 class RotatingNumber:
     def __init__(self):
         self.value = 50
@@ -29,19 +37,18 @@ class InputReader:
         line = raw.strip()
         return line[0], int(line[1:])
 
-class Challenge:
+class Challenge(Debugable):
     def __init__(self, debug=False):
-        self.debug = debug
-        if self.debug:
-            print("Debug mode is ON")
-    
+        self.debug_mode = debug
+
     def execute(self):
         self.safe = RotatingNumber()
         self.data = InputReader(sys.stdin)
         for direction, amount in self.data:
-            print(f"Rotating {direction} by {amount}.")
+            self.debug(f"Rotating {direction} by {amount}.")
             self.safe.rotate(direction, amount)
-            print(f"New value: {self.safe.value}")
+            self.debug(f"New value: {self.safe.value}")
 
 challenge = Challenge(debug=True)
 challenge.execute()
+print(f"Final value: {challenge.safe.zero_count}")
